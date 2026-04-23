@@ -38,6 +38,12 @@ const Endpoints = {
     apiLogin: "https://br-front-service.gwmcloud.com/br-official-commerce/br-official-gateway/pc-api/api/v1.0/userAuth/loginAccount"
 };
 
+const ApiRequest = {
+    timeout: 30000,
+    retries: 3,
+    retryDelay: 15000,
+};
+
 const UserMessages = {
     PIN_NOT_CONFIGURED: "PIN para comandos remotos não configurado. Não é possível executar comandos sem o PIN configurado no aplicativo MY GWM.",
     COMMAND_ALREADY_EXECUTING: (description) => `O comando remoto \"${description}\" ainda está em execução. Por favor, aguarde seu término antes de solicitar um novo comando.`,
@@ -132,6 +138,10 @@ async function auth() {
         if(key === "refreshToken")
             refreshToken = data.data[key];
       });
+      if (accessToken)
+        storage.setItem("accessToken", accessToken);
+      if (refreshToken)
+        storage.setItem("refreshToken", refreshToken);
       return { accessToken, refreshToken };
     }
     throw data;
@@ -142,6 +152,43 @@ async function auth() {
 };
 
 let headers = {}
+
+function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function formatAxiosError(error) {
+    if (!error)
+        return "unknown error";
+
+    if (error.response)
+        return JSON.stringify(error.response.data);
+
+    return error.message || error.code || String(error);
+}
+
+async function requestWithRetry(description, requestFactory) {
+    let lastError;
+
+    for (let attempt = 1; attempt <= ApiRequest.retries; attempt++) {
+        try {
+            return await requestFactory();
+        } catch (error) {
+            lastError = error;
+            const isLastAttempt = attempt === ApiRequest.retries;
+            printLog(
+                isLastAttempt ? LogType.ERROR : LogType.WARNING,
+                `${description} failed on attempt ${attempt}/${ApiRequest.retries}`,
+                formatAxiosError(error)
+            );
+
+            if (!isLastAttempt)
+                await sleep(ApiRequest.retryDelay);
+        }
+    }
+
+    throw lastError;
+}
 
 async function updateHeaders() {
     if (headers.accessToken && axios.defaults.httpsAgent)
@@ -338,19 +385,36 @@ const carData = {
     async getCarList() {
         try {
             await updateHeaders();
-            return await axios.get(`${Endpoints.apiVehicle}/globalapp/vehicle/acquireVehicles`, { headers });
+            return await requestWithRetry(
+                "Retrieving GWM vehicle list",
+                () => axios.get(`${Endpoints.apiVehicle}/globalapp/vehicle/acquireVehicles`, {
+                    headers,
+                    timeout: ApiRequest.timeout,
+                })
+            );
             
         } catch(e) {
-            printLog(LogType.ERROR, `---${UserMessages.ERROR_RETRIEVING_CAR_DATA}---`, e.Message);
+            printLog(
+                LogType.ERROR,
+                `---${UserMessages.ERROR_RETRIEVING_CAR_DATA}---`,
+                formatAxiosError(e)
+            );
+            return null;
         }
     },
     async getCarInfo(vin) {
         try {
             await updateHeaders();
-            const { data } = await axios.get(`${Endpoints.apiVehicle}/vehicle/getLastStatus?vin=${String(vin).toUpperCase()}&flag=true`, { headers });
+            const { data } = await requestWithRetry(
+                `Retrieving GWM vehicle status for ${String(vin).toUpperCase()}`,
+                () => axios.get(`${Endpoints.apiVehicle}/vehicle/getLastStatus?vin=${String(vin).toUpperCase()}&flag=true`, {
+                    headers,
+                    timeout: ApiRequest.timeout,
+                })
+            );
             return data.data;
         } catch (e) {
-            printLog(LogType.ERROR, `---${UserMessages.ERROR_RETRIEVING_CAR_LIST}---`, e.Message);
+            printLog(LogType.ERROR, `---${UserMessages.ERROR_RETRIEVING_CAR_LIST}---`, formatAxiosError(e));
         }
     },    
     async getStatus(vin) {        
