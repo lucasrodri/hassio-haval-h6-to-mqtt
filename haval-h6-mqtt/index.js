@@ -16,14 +16,14 @@ if (REFRESH_TIME < 5) {
 
 const getCarList = async () => {
   try {
-    const { data } = await carConnector.carData.getCarList();
-    var carList;
-    if(data)
-      carList = data.data;
-
+    const response = await carConnector.carData.getCarList();
+    const carList = response && response.data && Array.isArray(response.data.data)
+      ? response.data.data
+      : [];
     return carList;
   } catch(e) {
     printLog(LogType.ERROR, "***Error retrieving car data: ", e.message);
+    return [];
   }
 }
 
@@ -53,7 +53,13 @@ validationSchema.validate(process.env)
     return await getCarList();
   })
   .then(async (data)=> {
-    var carList = data;
+    let carList = Array.isArray(data) ? data : [];
+    if (carList.length === 0 && VIN) {
+      const fallbackVin = String(VIN).toUpperCase();
+      printLog(LogType.WARNING, `  No cars returned from API. Falling back to configured VIN ${fallbackVin}.`);
+      carList = [{ vin: fallbackVin }];
+    }
+
     if(carList.length > 0){
 
       printLog(LogType.INFO, "  Registering car list");
@@ -187,7 +193,7 @@ validationSchema.validate(process.env)
           //---------------------
           Object.keys(sensorTopics).forEach((code) => {
             var { description, unit, device_class, entity_type, icon, actionable, state_class } = sensorTopics[code];
-  
+
             register(entityType = EntityType[entity_type.toUpperCase()],
                      vin = _vin,
                      code = code, 
@@ -305,11 +311,16 @@ validationSchema.validate(process.env)
 
           printLog(LogType.INFO, "    Activating actionables and linked entities");
           ActionableAndLink.execute();
+          storage.setItem('registered-' + _vin, 'true');
         }
         else{
           printLog(LogType.ERROR, "   ¡¡¡No data found. Check your configuration!!!");
         }
       }
+    } else {
+      printLog(LogType.ERROR, "  No cars returned from API and VIN is not configured. Startup aborted.");
+      process.exitCode = 1;
+      setTimeout(() => process.exit(1), 1000);
     }
   })
   .then(() => {
@@ -318,21 +329,73 @@ validationSchema.validate(process.env)
   })
   .catch((e) => {
     printLog(LogType.ERROR, '***Error on startup process: ', e.message);
-    process.exit(0);
+    process.exit(1);
   });
 
+  let updateStateInProgress = false;
+
   const updateState = async () => {
+    if (updateStateInProgress) {
+      printLog(LogType.WARNING, "Skipping status update because the previous update is still running.");
+      return;
+    }
+
+    updateStateInProgress = true;
     const vinList = storage.getItem('vinList') ? storage.getItem('vinList').split(',') : [];
   
-    for (const vin of vinList) {
-      const data = await GetCarLastStatus(vin);
+    try {
+      for (const vin of vinList) {
+        const data = await GetCarLastStatus(vin);
 
-      let attributes = {};
-      var slugify = require("slugify");
-    
-      try{
+        let attributes = {};
+        var slugify = require("slugify");
+
+        try{
           if(data && data.items){
             printLog(LogType.INFO, "Updating status");
+            if (storage.getItem('registered-' + vin) !== 'true') {
+              printLog(LogType.INFO, `Registering MQTT entities for ${vin}`);
+              Object.keys(sensorTopics).forEach((code) => {
+                var { description, unit, device_class, entity_type, icon, actionable, state_class } = sensorTopics[code];
+
+                register(entityType = EntityType[entity_type.toUpperCase()],
+                         vin = vin,
+                         code = code,
+                         entity_name = description,
+                         unit = unit,
+                         device_class = device_class,
+                         icon = icon,
+                         actionable = actionable,
+                         initial_value = null,
+                         state_class = state_class);
+              });
+
+              register(entityType = EntityType.SENSOR,
+                       vin = vin,
+                       code = "hyEngSts",
+                       entity_name = "Estado do Motor",
+                       unit = null,
+                       device_class = null,
+                       icon = "mdi:engine",
+                       actionable = null,
+                       initial_value = null,
+                       state_class = null);
+
+              register(entityType = EntityType.SENSOR,
+                       vin = vin,
+                       code = "status_message",
+                       entity_name = "Status Message",
+                       unit = null,
+                       device_class = null,
+                       icon = "mdi:message-text",
+                       actionable = null,
+                       initial_value = null,
+                       state_class = null);
+
+              storage.setItem('registered-' + vin, 'true');
+              ActionableAndLink.execute();
+            }
+
             data.items.forEach(({ code, value }) => {
               var entity_value = value;
               if (sensorTopics.hasOwnProperty(code)) {
@@ -372,11 +435,13 @@ validationSchema.validate(process.env)
           }
           else
             printLog(LogType.ERROR, "***Failed to update status");
-      } catch (e) {
-        printLog(LogType.ERROR, `***Error updating information: ${e.message}`);
-        process.exit(0);
+        } catch (e) {
+          printLog(LogType.ERROR, `***Error updating information: ${e.message}`);
+        }
       }
-  }
+    } finally {
+      updateStateInProgress = false;
+    }
 };
 
 setInterval(async () => updateState(), (REFRESH_TIME || 5) * 1000);
