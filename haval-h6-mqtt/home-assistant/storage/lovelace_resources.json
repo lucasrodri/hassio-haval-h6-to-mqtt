@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace_resources",
+  "data": {
+    "items": [
+      {
+        "id": "hacsfiles_lovelace-card-mod_card-mod_js",
+        "type": "module",
+        "url": "/hacsfiles/lovelace-card-mod/card-mod.js?v=4.2.1-1776924583"
+      },
+      {
+        "id": "hacsfiles_stack-in-card_stack-in-card_js",
+        "url": "/hacsfiles/stack-in-card/stack-in-card.js?v=1776922211",
+        "type": "module"
+      },
+      {
+        "id": "hacsfiles_button-card_button-card_js",
+        "url": "/hacsfiles/button-card/button-card.js?v=1776922211",
+        "type": "module"
+      },
+      {
+        "id": "hacsfiles_lovelace-mushroom_mushroom_js",
+        "url": "/hacsfiles/lovelace-mushroom/mushroom.js?v=1776922211",
+        "type": "module"
+      },
+      {
+        "id": "hacsfiles_template-entity-row_template-entity-row_js",
+        "url": "/hacsfiles/template-entity-row/template-entity-row.js?v=1776922211",
+        "type": "module"
+      },
+      {
+        "id": "hacsfiles_bar-card_bar-card_js",
+        "url": "/hacsfiles/bar-card/bar-card.js?v=1776922211",
+        "type": "module"
+      },
+      {
+        "id": "hacsfiles_fold-entity-row_fold-entity-row_js",
+        "url": "/hacsfiles/fold-entity-row/fold-entity-row.js?v=1776922211",
+        "type": "module"
+      },
+      {
+        "id": "hacsfiles_config-template-card_config-template-card_js",
+        "url": "/hacsfiles/config-template-card/config-template-card.js?v=1776922211",
+        "type": "module"
+      },
+      {
+        "id": "hacsfiles_collapsable-cards_collapsable-cards_js",
+        "url": "/hacsfiles/collapsable-cards/collapsable-cards.js?v=1776922211",
+        "type": "module"
+      },
+      {
+        "id": "hacsfiles_mini-graph-card_mini-graph-card-bundle_js",
+        "url": "/hacsfiles/mini-graph-card/mini-graph-card-bundle.js?v=1776922211",
+        "type": "module"
+      },
+      {
+        "id": "hacsfiles_map-card_map-card_js",
+        "url": "/hacsfiles/map-card/map-card.js?v=1776922211",
+        "type": "module"
+      },
+      {
+        "id": "hacsfiles_auto-entities_auto-entities_js",
+        "url": "/hacsfiles/auto-entities/auto-entities.js?v=1776922211",
+        "type": "module"
+      },
+      {
+        "id": "hacsfiles_hassio-havaleiros-charging-hist-card_charging-hist-card_js",
+        "type": "module",
+        "url": "/hacsfiles/hassio-havaleiros-charging-hist-card/charging-hist-card.js?v=1776923741"
+      }
+    ]
+  }
+}
