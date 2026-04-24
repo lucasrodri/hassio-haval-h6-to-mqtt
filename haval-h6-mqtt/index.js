@@ -35,6 +35,24 @@ const GetCarLastStatus = async (vin) => {
   }
 };
 
+const applySensorFormula = (code, rawValue) => {
+  const formula = sensorTopics[code] && sensorTopics[code].formula;
+  if (!formula) return rawValue;
+  const numericValue = Number(rawValue);
+  if (!Number.isFinite(numericValue)) return undefined;
+
+  try {
+    return eval(formula.replace("value", String(numericValue)));
+  } catch (e) {
+    printLog(
+      LogType.ERROR,
+      `***Error applying formula for sensor ${code}: ${formula} with value ${rawValue}***`,
+      e.message
+    );
+    return rawValue;
+  }
+};
+
 storage.setItem('Startup', "true");
 printLog(LogType.INFO, "***STARTUP PROCESS INITIATED***");
 printLog(LogType.INFO, "Flight check:");
@@ -209,8 +227,8 @@ validationSchema.validate(process.env)
           data.items.forEach(({ code, value }) => {
             if (sensorTopics.hasOwnProperty(code)) {
               var entity_value = value;
-              if(sensorTopics[code].formula) entity_value = eval(sensorTopics[code].formula.replace("value", value));
-              sendMessage(_vin, code, entity_value);
+              entity_value = applySensorFormula(code, value);
+              if (entity_value !== undefined) sendMessage(_vin, code, entity_value);
             }
           });          
           //---------------------
@@ -399,9 +417,8 @@ validationSchema.validate(process.env)
             data.items.forEach(({ code, value }) => {
               var entity_value = value;
               if (sensorTopics.hasOwnProperty(code)) {
-                if(sensorTopics[code].formula) entity_value = eval(sensorTopics[code].formula.replace("value", value));
-                
-                sendMessage(vin, code, entity_value);
+                entity_value = applySensorFormula(code, value);
+                if (entity_value !== undefined) sendMessage(vin, code, entity_value);
               }
               
               if (attributeTopics.hasOwnProperty(code)) {
