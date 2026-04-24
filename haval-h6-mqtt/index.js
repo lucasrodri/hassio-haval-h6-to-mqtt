@@ -35,6 +35,74 @@ const GetCarLastStatus = async (vin) => {
   }
 };
 
+const INVALID_SENSOR_VALUES = new Set(["", "--", null, undefined]);
+const NUMERIC_DEVICE_CLASSES = new Set([
+  "battery",
+  "distance",
+  "duration",
+  "pressure",
+  "temperature",
+  "volume",
+]);
+const NUMERIC_UNITS = new Set(["%", "km", "L", "min", "°C", "psi"]);
+
+const hasNumericBehavior = (topic) => {
+  if (!topic) return false;
+  if (topic.formula) return true;
+  if (topic.state_class && !["None", "null", "", "-", " "].includes(String(topic.state_class))) return true;
+  if (topic.device_class && NUMERIC_DEVICE_CLASSES.has(String(topic.device_class))) return true;
+  if (topic.unit && NUMERIC_UNITS.has(String(topic.unit))) return true;
+  return false;
+};
+
+const applySensorFormula = (code, rawValue) => {
+  const formula = sensorTopics[code] && sensorTopics[code].formula;
+  if (!formula) return rawValue;
+  const numericValue = Number(rawValue);
+  if (!Number.isFinite(numericValue)) return undefined;
+
+  try {
+    return eval(formula.replace("value", String(numericValue)));
+  } catch (e) {
+    printLog(
+      LogType.ERROR,
+      `***Error applying formula for sensor ${code}: ${formula} with value ${rawValue}***`,
+      e.message
+    );
+    return rawValue;
+  }
+};
+
+const normalizeSensorValue = (code, rawValue) => {
+  const topic = sensorTopics[code];
+  if (!topic) return rawValue;
+
+  if (topic.formula) return applySensorFormula(code, rawValue);
+
+  if (INVALID_SENSOR_VALUES.has(rawValue) && hasNumericBehavior(topic)) {
+    return undefined;
+  }
+
+  return rawValue;
+};
+
+const publishSensorValue = (vin, code, rawValue) => {
+  const storageKey = `last-valid-${String(vin).toUpperCase()}-${String(code)}`;
+  const normalizedValue = normalizeSensorValue(code, rawValue);
+
+  if (normalizedValue !== undefined) {
+    storage.setItem(storageKey, String(normalizedValue));
+    sendMessage(vin, code, normalizedValue);
+    return;
+  }
+
+  const fallbackValue = storage.getItem(storageKey);
+  if (fallbackValue !== undefined && fallbackValue !== null && fallbackValue !== "") {
+    printLog(LogType.WARNING, `Using last valid value for ${code} on ${String(vin).toUpperCase()}: ${fallbackValue}`);
+    sendMessage(vin, code, fallbackValue);
+  }
+};
+
 storage.setItem('Startup', "true");
 printLog(LogType.INFO, "***STARTUP PROCESS INITIATED***");
 printLog(LogType.INFO, "Flight check:");
@@ -208,9 +276,7 @@ validationSchema.validate(process.env)
 
           data.items.forEach(({ code, value }) => {
             if (sensorTopics.hasOwnProperty(code)) {
-              var entity_value = value;
-              if(sensorTopics[code].formula) entity_value = eval(sensorTopics[code].formula.replace("value", value));
-              sendMessage(_vin, code, entity_value);
+              publishSensorValue(_vin, code, value);
             }
           });          
           //---------------------
@@ -397,11 +463,8 @@ validationSchema.validate(process.env)
             }
 
             data.items.forEach(({ code, value }) => {
-              var entity_value = value;
               if (sensorTopics.hasOwnProperty(code)) {
-                if(sensorTopics[code].formula) entity_value = eval(sensorTopics[code].formula.replace("value", value));
-                
-                sendMessage(vin, code, entity_value);
+                publishSensorValue(vin, code, value);
               }
               
               if (attributeTopics.hasOwnProperty(code)) {

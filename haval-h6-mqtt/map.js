@@ -39,7 +39,7 @@ const sensorTopics = {
   2101002: {
     description: "Pressão do Pneu Dianteiro Direito",
     unit: "psi",
-    device_class: "pressure",
+    device_class: "None",
     entity_type: "sensor",
     state_class: "measurement",
     formula: "Math.floor(parseInt(value) * 0.145038)",
@@ -49,7 +49,7 @@ const sensorTopics = {
   2101001: {
     description: "Pressão do Pneu Dianteiro Esquerdo",
     unit: "psi",
-    device_class: "pressure",
+    device_class: "None",
     entity_type: "sensor",
     state_class: "measurement",
     formula: "Math.floor(parseInt(value) * 0.145038)",
@@ -59,7 +59,7 @@ const sensorTopics = {
   2101004: {
     description: "Pressão do Pneu Traseiro Direito",
     unit: "psi",
-    device_class: "pressure",
+    device_class: "None",
     entity_type: "sensor",
     state_class: "measurement",
     formula: "Math.floor(parseInt(value) * 0.145038)",
@@ -69,7 +69,7 @@ const sensorTopics = {
   2101003: {
     description: "Pressão do Pneu Traseiro Esquerdo",
     unit: "psi",
-    device_class: "pressure",
+    device_class: "None",
     entity_type: "sensor",
     state_class: "measurement",
     formula: "Math.floor(parseInt(value) * 0.145038)",

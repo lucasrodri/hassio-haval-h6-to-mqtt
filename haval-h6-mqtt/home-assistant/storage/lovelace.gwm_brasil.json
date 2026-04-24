@@ -1,0 +1,2507 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.gwm_brasil",
+  "data": {
+    "config": {
+      "title": "Haval H6 Dashboard",
+      "views": [
+        {
+          "type": "panel",
+          "path": "gwm-dashboard",
+          "title": "GWM Dashboard",
+          "icon": "mdi:car-electric",
+          "cards": [
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "custom:mushroom-select-card",
+                  "entity": "select.gwmbrasil_veiculos_registrados",
+                  "icon_color": "disabled",
+                  "layout": "horizontal",
+                  "tap_action": {
+                    "action": "none"
+                  },
+                  "card_mod": {
+                    "style": ":host {\n  display: {% if state_attr('select.gwmbrasil_veiculos_registrados', 'options') | length > 1 %} block {% else %} none {% endif %};\n}\nha-card {\n  background: none !important /*bg*/;\n  border-radius: 6px;\n}\n"
+                  }
+                },
+                {
+                  "type": "custom:stack-in-card",
+                  "mode": "horizontal",
+                  "cards": [
+                    {
+                      "type": "custom:button-card",
+                      "name": " ",
+                      "entity_picture": "[[[\n  return states[\"sensor.gwmbrasil_lgwffua59sh903754_imagem_do_veiculo\"].state;\n]]]\n",
+                      "show_entity_picture": true,
+                      "tap_action": {
+                        "action": "none"
+                      },
+                      "hold_action": {
+                        "action": "none"
+                      },
+                      "size": "400px",
+                      "styles": {
+                        "card": [
+                          {
+                            "background": "rgba(0,0,0,0)"
+                          },
+                          {
+                            "border": 0
+                          },
+                          {
+                            "box-shadow": "none"
+                          },
+                          {
+                            "position": "absolute"
+                          }
+                        ]
+                      },
+                      "card_mod": {
+                        "style": "/* === CONTÊINER PRINCIPAL === */\nha-card {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 100%;\n  height: 100%;\n  transform: translateZ(0);\n  isolation: isolate;\n}\n\n#img-cell {\n  display: flex !important;\n  justify-content: center !important;\n  align-items: center !important;\n  width: 100%;\n  height: 100%;\n  position: relative;\n}\n\n#img-cell img {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n  margin: auto;\n  display: block;\n}\n\n@supports (-webkit-touch-callout: none) {\n  #img-cell img {\n    display: none;\n  }\n\n  #img-cell {\n    background-image: url(\"{{ states('sensor.gwmbrasil_lgwffua59sh903754_imagem_do_veiculo') }}\");\n    background-repeat: no-repeat;\n    background-position: center;\n    background-size: contain;\n  }\n}\n"
+                      }
+                    },
+                    {
+                      "type": "custom:stack-in-card",
+                      "mode": "vertical",
+                      "keep": {
+                        "background": false,
+                        "box_shadow": false,
+                        "border_radius": false,
+                        "margin": false,
+                        "outer_padding": false
+                      },
+                      "card_mod": {
+                        "style": "ha-card {\n  background: rgba(0,0,0,0);\n  border: 0px;\n  box-shadow: 0px 0px rgba(0,0,0,0);\n}\n"
+                      },
+                      "cards": [
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "sensor.gwmbrasil_lgwffua59sh903754_estado_da_carga",
+                              "state": "1"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/carga_carregando.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 1.1;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "sensor.gwmbrasil_lgwffua59sh903754_estado_da_carga",
+                              "state": "5"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/carga_aguardando.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 1.1;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "sensor.gwmbrasil_lgwffua59sh903754_estado_da_carga",
+                              "state": "4"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/carga_naocarregando.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 1.1;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "picture",
+                          "image": "/local/images/haval_h6/h6.png",
+                          "tap_action": {
+                            "action": "none"
+                          },
+                          "hold_action": {
+                            "action": "none"
+                          },
+                          "card_mod": {
+                            "style": ":host {\n  z-index: 3;\n  position: relative;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_estado_do_ar_condicionado",
+                              "state": "on"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/ac_direita.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 6;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_estado_do_ar_condicionado",
+                              "state": "on"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/ac_esquerda.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 6;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_porta_dianteira_direita",
+                              "state": "on"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/porta_dianteira_direita_aberta.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 4;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_porta_dianteira_direita",
+                              "state": "off"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/porta_dianteira_direita_fechada.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 4;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_porta_dianteira_esquerda",
+                              "state": "on"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/porta_dianteira_esquerda_aberta.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 4;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_porta_dianteira_esquerda",
+                              "state": "off"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/porta_dianteira_esquerda_fechada.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 4;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_porta_malas",
+                              "state": "on"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/porta_malas.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 4;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_porta_traseira_direita",
+                              "state": "on"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/porta_traseira_direita_aberta.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 4;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_porta_traseira_direita",
+                              "state": "off"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/porta_traseira_direita_fechada.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 4;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_porta_traseira_esquerda",
+                              "state": "on"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/porta_traseira_esquerda_aberta.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 4;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_porta_traseira_esquerda",
+                              "state": "off"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/porta_traseira_esquerda_fechada.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 4;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "sensor.gwmbrasil_lgwffua59sh903754_posicao_do_teto_solar",
+                              "state_not": "3"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/teto_solar_aberto.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 4;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_estado_da_trava",
+                              "state": "off"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/trava.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 2;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_estado_do_ar_condicionado",
+                              "state": "on"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/ventilacao.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 5;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "sensor.gwmbrasil_lgwffua59sh903754_vidro_dianteiro_direito",
+                              "state": "2"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/vidro_dianteiro_direito_aberto.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 6;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "sensor.gwmbrasil_lgwffua59sh903754_vidro_dianteiro_direito",
+                              "state": "3"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/vidro_dianteiro_direito_entreaberto.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 5;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "sensor.gwmbrasil_lgwffua59sh903754_vidro_dianteiro_esquerdo",
+                              "state": "2"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/vidro_dianteiro_esquerdo_aberto.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 6;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "sensor.gwmbrasil_lgwffua59sh903754_vidro_dianteiro_esquerdo",
+                              "state": "3"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/vidro_dianteiro_esquerdo_entreaberto.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 5;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "sensor.gwmbrasil_lgwffua59sh903754_vidro_traseiro_direito",
+                              "state": "2"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/vidro_traseiro_direito_aberto.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 6;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "sensor.gwmbrasil_lgwffua59sh903754_vidro_traseiro_direito",
+                              "state": "3"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/vidro_traseiro_direito_entreaberto.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 5;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "sensor.gwmbrasil_lgwffua59sh903754_vidro_traseiro_esquerdo",
+                              "state": "2"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/vidro_traseiro_esquerdo_aberto.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 6;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "sensor.gwmbrasil_lgwffua59sh903754_vidro_traseiro_esquerdo",
+                              "state": "3"
+                            }
+                          ],
+                          "card": {
+                            "type": "picture",
+                            "image": "/local/images/haval_h6/vidro_traseiro_esquerdo_entreaberto.png",
+                            "tap_action": {
+                              "action": "none"
+                            },
+                            "hold_action": {
+                              "action": "none"
+                            },
+                            "card_mod": {
+                              "style": ":host {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 5;\n}\nha-card {\n  max-width: 441px;\n  max-height: 400px;\n  border: 0px;\n  background: rgba(0,0,0,0);\n}\nimg {\n  max-width: 100%;\n  max-height: 100%;\n  object-fit: contain;\n}\n"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "card_mod": {
+                    "style": "ha-card {\n  display: flex;\n  border: 0px;\n  justify-content: center;\n  align-items: center;\n  background: none !important /*bg*/;\n  border-radius: 6px;\n}\n"
+                  }
+                },
+                {
+                  "type": "markdown",
+                  "content": "{% set raw = states('sensor.gwmbrasil_lgwffua59sh903754_status_message') %}          {% if raw in ['unknown','unavailable','', None] %}\n  {% set mensagens = [] %}\n{% else %}\n  {% set mensagens = raw.split('|') %}\n{% endif %}\n{% set textos = {\n  \"NO_ALERTS\": \"Não há alertas neste momento.\",\n  \"ERR_FORMATTING_ADDRESS\": \"Erro ao formatar endereço.\",\n  \"ERR_GENERATE_RESPONSE\": \"Desculpe, houve um erro ao gerar a resposta.\",\n  \"ALERT_HIGH_VOLTAGE_DISCONNECT\": \"A bateria de alta tensão já está totalmente carregada. O carregador deve ser desconectado.\",\n  \"SUNROOF_OPEN\": \"O teto solar está aberto.\",\n  \"UNLOCKED\": \"A trava das portas não está acionada e o veículo pode ser aberto.\",\n  \"ENGINE_ON_AND_UNLOCKED\": \"O motor está ligado e o veículo está destravado. Verifique se não foi esquecido ligado.\",\n  \"FUEL_LOW\": \"Nível de combustível abaixo de 15 litros. Recomenda-se abastecer.\",\n  \"AC_ON_WITH_ENGINE_OFF\": \"O ar-condicionado está ligado com o veículo desligado. Isso pode drenar a bateria de 12V.\",\n  \"REVIEW_PREFIX\": \"Seu veículo está dentro do limite padrão de quilometragem para agendar a revisão.\"\n} %}\n{% for item in mensagens %}\n  {% set partes = item.split('@') %}\n  {% set codigo = partes[0] | trim %}\n  {% if codigo in textos %}\n  • {{ textos.get(codigo) }}\n  {% elif codigo == 'VEHICLE_CHARGING_TIME' and partes|length >= 2 %}\n  • O veículo está carregando. Tempo aproximado para carga total: {{ partes[1] }}.\n  {% elif codigo == 'WINDOW_OPEN' and partes|length >= 2 %}\n  • O {{ partes[1] }} está aberto.\n  {% elif codigo == 'DOOR_OPEN' and partes|length >= 2 %}\n  • A {{ partes[1] }} está aberta.\n  {% elif codigo == 'TRUNK_OPEN' and partes|length >= 2 %}\n  • O {{ partes[1] }} está aberto.\n  {% elif codigo == 'BATTERY_12V_CRITICAL' and partes|length >= 2 %}\n  • 🔴 Alerta crítico: bateria 12V em {{ partes[1] }}%. Ligue o motor o quanto antes.\n  {% elif codigo == 'BATTERY_12V_ALERT' and partes|length >= 2 %}\n  • 🟠 Atenção: bateria 12V em {{ partes[1] }}%.\n  {% elif codigo == 'TIRE_PRESSURE' and partes|length >= 4 %}\n  • A {{ partes[1] }} está em {{ partes[2] }} psi com temperatura de {{ partes[3] }}.\n  {% elif codigo == 'TIRE_PRESSURE_DEFAULTS' and partes|length >= 3 %}\n  • A pressão recomendada pela montadora é entre {{ partes[1] }} e {{ partes[2] }} psi.\n  {% elif codigo == 'SERVICE_WITH_TOLERANCE' and partes|length >= 2 %}\n  • Veículo no limite para revisão. Restam {{ partes[1] }} km antes da perda da garantia.\n  {% else %}\n  • {{ item }}\n  {% endif %}\n\n{% endfor %}\n",
+                  "card_mod": {
+                    "style": "ha-card {\n  background: rgba(30, 35, 45, 0.4);\n  backdrop-filter: blur(20px);\n  border-radius: 6px;\n  padding: 16px;\n  color: rgba(255,255,255,0.7);\n  font-size: 14px;\n  text-align: center;\n  display: {% if states('sensor.gwmbrasil_lgwffua59sh903754_status_message') in\n    ['NO_ALERTS','Não há alertas neste momento.','unknown','unavailable',''] %}\n    none\n  {% else %}\n    block\n  {% endif %} !important;\n}\n"
+                  }
+                },
+                {
+                  "type": "custom:button-card",
+                  "name": "Controles",
+                  "icon": "mdi:car-cog",
+                  "show_name": true,
+                  "show_icon": true,
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "controles"
+                  },
+                  "card_mod": {
+                    "style": "ha-card {\n  background: none !important /*bg*/;\n  border-radius: 6px;\n  animation:pulse 2s infinite;\n}\n"
+                  },
+                  "styles": {
+                    "icon": [
+                      {
+                        "width": "28px"
+                      }
+                    ],
+                    "name": [
+                      {
+                        "font-size": "14px"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "custom:stack-in-card",
+                  "mode": "horizontal",
+                  "cards": [
+                    {
+                      "type": "custom:mushroom-title-card",
+                      "title": "{{ states(\"sensor.gwmbrasil_lgwffua59sh903754_modelo_do_veiculo\") }}",
+                      "subtitle": "{{ states(\"sensor.gwmbrasil_lgwffua59sh903754_cor_do_veiculo\") }}",
+                      "title_tap_action": {
+                        "action": "none"
+                      },
+                      "subtitle_tap_action": {
+                        "action": "none"
+                      }
+                    }
+                  ],
+                  "card_mod": {
+                    "style": "ha-card {\n  display: flex;\n  justify-content: center !important;\n  align-items: center !important;\n  background: none !important /*bg*/;\n  border-radius: 6px;\n}\n"
+                  }
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:bar-card",
+                      "title": "Bateria",
+                      "positions": {
+                        "icon": "off",
+                        "name": "off"
+                      },
+                      "tap_action": {
+                        "action": "more-info"
+                      },
+                      "hold_action": {
+                        "action": "none"
+                      },
+                      "min": 0,
+                      "max": 100,
+                      "severity": [
+                        {
+                          "value": 0,
+                          "color": "#540000"
+                        },
+                        {
+                          "value": 50,
+                          "color": "#ffa200"
+                        },
+                        {
+                          "value": 100,
+                          "color": "#009c72"
+                        }
+                      ],
+                      "entities": [
+                        {
+                          "entity": "sensor.gwmbrasil_lgwffua59sh903754_estado_de_carga_soc"
+                        }
+                      ],
+                      "card_mod": {
+                        "style": ":host {\n  {% set modelo = states('sensor.gwmbrasil_lgwffua59sh903754_modelo_do_veiculo').split(' ') %}\n  {% if 'HEV' in modelo  or 'TANK' in modelo %}\n    display: none\n  {% endif %} !important;                \n}\nha-card {\n  background: none !important /*bg*/;\n  border-radius: 6px;\n}\n"
+                      }
+                    },
+                    {
+                      "type": "custom:bar-card",
+                      "title": "Combustível",
+                      "positions": {
+                        "icon": "off",
+                        "name": "off"
+                      },
+                      "tap_action": {
+                        "action": "more-info"
+                      },
+                      "hold_action": {
+                        "action": "none"
+                      },
+                      "min": 0,
+                      "max": 60,
+                      "severity": [
+                        {
+                          "value": 0,
+                          "color": "#540000"
+                        },
+                        {
+                          "value": 30,
+                          "color": "#ffa200"
+                        },
+                        {
+                          "value": 55,
+                          "color": "#009c72"
+                        }
+                      ],
+                      "entities": [
+                        {
+                          "entity": "sensor.gwmbrasil_lgwffua59sh903754_nivel_de_combustivel"
+                        }
+                      ],
+                      "card_mod": {
+                        "style": ":host {\n  {% set modelo = states('sensor.gwmbrasil_lgwffua59sh903754_modelo_do_veiculo').split(' ') %}\n  {% if 'HAVAL' not in modelo %}\n    display: none\n  {% endif %} !important;\n}              \nha-card {\n  background: none !important /*bg*/;\n  border-radius: 6px;\n}\n"
+                      }
+                    },
+                    {
+                      "type": "custom:bar-card",
+                      "title": "Autonomia EV",
+                      "positions": {
+                        "icon": "off",
+                        "name": "off"
+                      },
+                      "tap_action": {
+                        "action": "more-info"
+                      },
+                      "hold_action": {
+                        "action": "none"
+                      },
+                      "min": 0,
+                      "max": 100,
+                      "severity": [
+                        {
+                          "value": 0,
+                          "color": "#540000"
+                        },
+                        {
+                          "value": 50,
+                          "color": "#ffa200"
+                        },
+                        {
+                          "value": 100,
+                          "color": "#009c72"
+                        }
+                      ],
+                      "entities": [
+                        {
+                          "entity": "sensor.gwmbrasil_lgwffua59sh903754_autonomia_ev"
+                        }
+                      ],
+                      "card_mod": {
+                        "style": ":host {\n  {% set modelo = states('sensor.gwmbrasil_lgwffua59sh903754_modelo_do_veiculo').split(' ') %}\n  {% if 'TANK' not in modelo  %}\n    display: none\n  {% endif %} !important;\n}\nha-card {\n  background: none !important /*bg*/;\n  border-radius: 6px;\n}\n"
+                      }
+                    },
+                    {
+                      "type": "custom:bar-card",
+                      "title": "Autonomia Combustão",
+                      "positions": {
+                        "icon": "off",
+                        "name": "off"
+                      },
+                      "tap_action": {
+                        "action": "more-info"
+                      },
+                      "hold_action": {
+                        "action": "none"
+                      },
+                      "min": 0,
+                      "max": 800,
+                      "severity": [
+                        {
+                          "value": 0,
+                          "color": "#540000"
+                        },
+                        {
+                          "value": 200,
+                          "color": "#ffa200"
+                        },
+                        {
+                          "value": 800,
+                          "color": "#009c72"
+                        }
+                      ],
+                      "entities": [
+                        {
+                          "entity": "sensor.gwmbrasil_lgwffua59sh903754_autonomia_combustao"
+                        }
+                      ],
+                      "card_mod": {
+                        "style": ":host {\n  {% set modelo = states('sensor.gwmbrasil_lgwffua59sh903754_modelo_do_veiculo').split(' ') %}\n  {% if 'TANK' not in modelo %}\n    display: none\n  {% endif %} !important;\n}\nha-card {\n  background: none !important /*bg*/;\n  border-radius: 6px;\n}\n"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:collapsable-cards",
+                  "title": "Monitoramento dos pneus",
+                  "defaultOpen": true,
+                  "cards": [
+                    {
+                      "type": "vertical-stack",
+                      "cards": [
+                        {
+                          "type": "horizontal-stack",
+                          "cards": [
+                            {
+                              "type": "custom:mini-graph-card",
+                              "name": "Dianteiro Esquerdo",
+                              "entities": [
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_pressao_do_pneu_dianteiro_esquerdo",
+                                  "name": "Pressão"
+                                },
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_temperatura_do_pneu_dianteiro_esquerdo",
+                                  "name": "Temperatura",
+                                  "show_fill": false
+                                }
+                              ],
+                              "icon": "mdi:arrow-top-left",
+                              "align_icon": "left",
+                              "align_state": "center",
+                              "hours_to_show": 48,
+                              "points_per_hour": 0.25,
+                              "tap_action": {
+                                "action": "none"
+                              },
+                              "hold_action": {
+                                "action": "none"
+                              },
+                              "show": {
+                                "fill": true
+                              },
+                              "card_mod": {
+                                "style": "ha-card {\n  background: none !important /*bg*/;\n  border-radius: 6px;\n}\n"
+                              }
+                            },
+                            {
+                              "type": "custom:mini-graph-card",
+                              "name": "Dianteiro Direito",
+                              "entities": [
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_pressao_do_pneu_dianteiro_direito",
+                                  "name": "Pressão"
+                                },
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_temperatura_do_pneu_dianteiro_direito",
+                                  "name": "Temperatura",
+                                  "show_fill": false
+                                }
+                              ],
+                              "icon": "mdi:arrow-top-right",
+                              "align_icon": "left",
+                              "align_state": "center",
+                              "hours_to_show": 48,
+                              "points_per_hour": 0.25,
+                              "tap_action": {
+                                "action": "none"
+                              },
+                              "hold_action": {
+                                "action": "none"
+                              },
+                              "show": {
+                                "fill": true
+                              },
+                              "card_mod": {
+                                "style": "ha-card {\n  background: none !important /*bg*/;\n  border-radius: 6px;\n}\n"
+                              }
+                            },
+                            {
+                              "type": "custom:mini-graph-card",
+                              "name": "Traseiro Esquerdo",
+                              "entities": [
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_pressao_do_pneu_traseiro_esquerdo",
+                                  "name": "Pressão"
+                                },
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_temperatura_do_pneu_traseiro_esquerdo",
+                                  "name": "Temperatura",
+                                  "show_fill": false
+                                }
+                              ],
+                              "icon": "mdi:arrow-bottom-left",
+                              "align_icon": "left",
+                              "align_state": "center",
+                              "hours_to_show": 48,
+                              "points_per_hour": 0.25,
+                              "tap_action": {
+                                "action": "none"
+                              },
+                              "hold_action": {
+                                "action": "none"
+                              },
+                              "show": {
+                                "fill": true
+                              },
+                              "card_mod": {
+                                "style": "ha-card {\n  background: none !important /*bg*/;\n  border-radius: 6px;\n}\n"
+                              }
+                            },
+                            {
+                              "type": "custom:mini-graph-card",
+                              "name": "Traseiro Direito",
+                              "entities": [
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_pressao_do_pneu_traseiro_direito",
+                                  "name": "Pressão"
+                                },
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_temperatura_do_pneu_traseiro_direito",
+                                  "name": "Temperatura",
+                                  "show_fill": false
+                                }
+                              ],
+                              "icon": "mdi:arrow-bottom-right",
+                              "align_icon": "left",
+                              "align_state": "center",
+                              "hours_to_show": 48,
+                              "points_per_hour": 0.25,
+                              "tap_action": {
+                                "action": "none"
+                              },
+                              "hold_action": {
+                                "action": "none"
+                              },
+                              "show": {
+                                "fill": true
+                              },
+                              "card_mod": {
+                                "style": "ha-card {\n  background: none !important /*bg*/;\n  border-radius: 6px;\n}\n"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:collapsable-cards",
+                  "title": "Autonomia e pneus",
+                  "defaultOpen": true,
+                  "cards": [
+                    {
+                      "type": "horizontal-stack",
+                      "cards": [
+                        {
+                          "type": "vertical-stack",
+                          "cards": [
+                            {
+                              "type": "entities",
+                              "entities": [
+                                {
+                                  "type": "custom:template-entity-row",
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_estado_do_motor",
+                                  "name": "Estado do motor",
+                                  "state": "{% if is_state('sensor.gwmbrasil_lgwffua59sh903754_estado_do_motor', '0') %}Desligado{% elif is_state('sensor.gwmbrasil_lgwffua59sh903754_estado_do_motor', '1') %}Ligado{% else %}Desconhecido{% endif %}"
+                                },
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_quilometragem_total",
+                                  "name": "Quilometragem total"
+                                },
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_estado_de_carga_12v",
+                                  "name": "Estado de carga 12V",
+                                  "secondary_info": "last-updated",
+                                  "state_color": true,
+                                  "card_mod": {
+                                    "style": ":host {\n  {% if is_state('sensor.gwmbrasil_lgwffua59sh903754_estado_de_carga_12v','unknown') %} display: none !important {% endif %};\n}\n"
+                                  }
+                                },
+                                {
+                                  "type": "custom:template-entity-row",
+                                  "name": "Autonomia Total",
+                                  "state": "{{ ((states('sensor.gwmbrasil_lgwffua59sh903754_autonomia_combustao') | float(0)) + (states('sensor.gwmbrasil_lgwffua59sh903754_autonomia_ev') | float(0))) | round(2) }} km",
+                                  "stateq": "{{ ( (states('sensor.gwmbrasil_lgwffua59sh903754_autonomia_combustao') | float(0)) + (states('sensor.gwmbrasil_lgwffua59sh903754_autonomia_ev') | float(0)) ) | round(2) }} km",
+                                  "icon": "mdi:numeric",
+                                  "card_mod": {
+                                    "style": ":host {\n  {% set modelo = states('sensor.gwmbrasil_lgwffua59sh903754_modelo_do_veiculo').split(' ') %}\n  {% if 'PHEV' not in modelo %}\n    display: none\n  {% endif %} !important;\n}\n"
+                                  }
+                                },
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_autonomia_combustao",
+                                  "name": "Autonomia Combustão",
+                                  "card_mod": {
+                                    "style": ":host {\n  {% set modelo = states('sensor.gwmbrasil_lgwffua59sh903754_modelo_do_veiculo').split(' ') %}\n  {% if 'ORA' in modelo %}\n    display: none\n  {% endif %} !important;\n}\nha-card {\n  border-width: 0px !important;\n  background: none\n}\n"
+                                  }
+                                },
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_nivel_de_combustivel",
+                                  "name": "Nível de combustível",
+                                  "card_mod": {
+                                    "style": ":host {\n  {% set modelo = states('sensor.gwmbrasil_lgwffua59sh903754_modelo_do_veiculo').split(' ') %}\n  {% if 'HAVAL' not in modelo %}\n    display: none\n  {% endif %} !important;\n}\nha-card {\n  border-width: 0px !important;\n  background: none\n}\n"
+                                  }
+                                },
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_autonomia_ev",
+                                  "name": "Autonomia EV"
+                                },
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_estado_de_carga_soc",
+                                  "name": "Estado de carga (SoC)",
+                                  "state_color": true
+                                },
+                                {
+                                  "type": "custom:template-entity-row",
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_estado_da_carga",
+                                  "name": "Estado de Carregamento",
+                                  "state": "{% if is_state('sensor.gwmbrasil_lgwffua59sh903754_estado_da_carga', '0') %}Desconectado{% elif is_state('sensor.gwmbrasil_lgwffua59sh903754_estado_da_carga', '1') %}Carregando{% elif is_state('sensor.gwmbrasil_lgwffua59sh903754_estado_da_carga', '2') %}Programado{% elif is_state('sensor.gwmbrasil_lgwffua59sh903754_estado_da_carga', '3') %}Finalizado{% elif is_state('sensor.gwmbrasil_lgwffua59sh903754_estado_da_carga', '5') %}Aguardando liberação{% else %}Desconhecido{% endif %}"
+                                },
+                                {
+                                  "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_agendamento_de_carga",
+                                  "name": "Agendamento de carga",
+                                  "state": "{% if is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_agendamento_de_carga', 'off') %}Sem agendamento{% elif is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_agendamento_de_carga', 'on') %}Carregamento programado{% else %}Desconhecido{% endif %}",
+                                  "card_mod": {
+                                    "style": ":host {\n  display: {% if is_state('sensor.gwmbrasil_lgwffua59sh903754_agendamento_de_carga','on') %} block {% else %} none {% endif %};\n}\n"
+                                  },
+                                  "type": "custom:template-entity-row"
+                                },
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_tempo_de_carga",
+                                  "name": "Tempo de carga",
+                                  "card_mod": {
+                                    "style": ":host {\n  display: {% if is_state('sensor.gwmbrasil_lgwffua59sh903754_estado_da_carga','1') %} block {% else %} none {% endif %};\n}\n"
+                                  }
+                                },
+                                {
+                                  "type": "custom:mushroom-template-card",
+                                  "primary": "Interromper carregamento",
+                                  "icon": "mdi:ev-plug-type2",
+                                  "entity": "button.gwmbrasil_lgwffua59sh903754_interromper_carregamento",
+                                  "hold_action": {
+                                    "action": "none"
+                                  },
+                                  "tap_action": {
+                                    "action": "toggle",
+                                    "confirmation": {
+                                      "text": "Tem certeza de que deseja interromper o carregamento?"
+                                    }
+                                  },
+                                  "card_mod": {
+                                    "style": ":host {\n  display: {% if states('sensor.gwmbrasil_lgwffua59sh903754_estado_da_carga') in ['1','5'] %} block {% else %} none {% endif %};\n}\n"
+                                  }
+                                }
+                              ],
+                              "card_mod": {
+                                "style": "ha-card {\n  background: none !important /*bg*/;\n  border-radius: 6px;\n}\n"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "vertical-stack",
+                          "cards": [
+                            {
+                              "type": "entities",
+                              "entities": [
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_pressao_do_pneu_dianteiro_esquerdo",
+                                  "name": "Pressão do Pneu Dianteiro Esquerdo"
+                                },
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_temperatura_do_pneu_dianteiro_esquerdo",
+                                  "name": "Temperatura do Pneu Dianteiro Esquerdo"
+                                },
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_pressao_do_pneu_dianteiro_direito",
+                                  "name": "Pressão do Pneu Dianteiro Direito"
+                                },
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_temperatura_do_pneu_dianteiro_direito",
+                                  "name": "Temperatura do Pneu Dianteiro Direito"
+                                },
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_pressao_do_pneu_traseiro_esquerdo",
+                                  "name": "Pressão do Pneu Traseiro Esquerdo"
+                                },
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_temperatura_do_pneu_traseiro_esquerdo",
+                                  "name": "Temperatura do Pneu Traseiro Esquerdo"
+                                },
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_pressao_do_pneu_traseiro_direito",
+                                  "name": "Pressão do Pneu Traseiro Direito"
+                                },
+                                {
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_temperatura_do_pneu_traseiro_direito",
+                                  "name": "Temperatura do Pneu Traseiro Direito"
+                                }
+                              ],
+                              "card_mod": {
+                                "style": "ha-card {\n  background: none !important /*bg*/;\n  border-radius: 6px;\n}\n"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "card_mod": {
+                    "style": "ha-card {\n  border-width: 5px !important;\n  background: none\n}\n"
+                  }
+                },
+                {
+                  "type": "custom:collapsable-cards",
+                  "title": "Climatização",
+                  "defaultOpen": true,
+                  "cards": [
+                    {
+                      "type": "entities",
+                      "entities": [
+                        {
+                          "entity": "sensor.gwmbrasil_lgwffua59sh903754_temperatura_da_cabine",
+                          "name": "Temperatura da cabine"
+                        },
+                        {
+                          "type": "custom:template-entity-row",
+                          "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_estado_do_ar_condicionado",
+                          "name": "Ar Condicionado",
+                          "state": "{% if is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_estado_do_ar_condicionado', 'off') %}Desligado{% elif is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_estado_do_ar_condicionado', 'on') %}Ligado{% else %}Desconhecido{% endif %}"
+                        },
+                        {
+                          "type": "custom:mushroom-template-card",
+                          "primary": "Ligar A/C",
+                          "icon": "mdi:fan-clock",
+                          "secondary": "Acionar por 15 minutos em 18°C",
+                          "entity": "button.gwmbrasil_lgwffua59sh903754_ativacao_do_ar_condicionado",
+                          "hold_action": {
+                            "action": "none"
+                          },
+                          "tap_action": {
+                            "action": "toggle",
+                            "confirmation": {
+                              "text": "Tem certeza de que deseja ligar o ar condicionado? O veículo tem que estar trancado, desligado e, para modelos PHEV, não pode estar em carregamento ou com o plugue conectado."
+                            }
+                          },
+                          "card_mod": {
+                            "style": ":host {\n  display: block;\n}\n"
+                          }
+                        },
+                        {
+                          "type": "custom:template-entity-row",
+                          "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_estado_do_purificador_de_ar",
+                          "name": "Purificador de ar",
+                          "state": "{% if is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_estado_do_purificador_de_ar', 'off') %}Desligado{% elif is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_estado_do_purificador_de_ar', 'on') %}Ligado{% else %}Desconhecido{% endif %}",
+                          "card_mod": {
+                            "style": ":host {\n  {% set modelo = states('sensor.gwmbrasil_lgwffua59sh903754_modelo_do_veiculo').split(' ') %}\n  {% if 'TANK' in modelo %}\n    display: none\n  {% endif %} !important;\n}              \n"
+                          }
+                        }
+                      ],
+                      "card_mod": {
+                        "style": "ha-card {\n  background: none !important /*bg*/;\n  border-radius: 6px;\n}\n"
+                      }
+                    },
+                    {
+                      "type": "entities",
+                      "entities": [
+                        {
+                          "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_aquecimento_da_cabine",
+                          "name": "Aquecimento da cabine"
+                        },
+                        {
+                          "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_aquecimento_do_banco_do_motorista",
+                          "name": "Aquecimento do banco do motorista"
+                        },
+                        {
+                          "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_aquecimento_do_banco_do_passageiro",
+                          "name": "Aquecimento do banco do passageiro"
+                        },
+                        {
+                          "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_aquecimento_do_volante",
+                          "name": "Aquecimento do banco do volante"
+                        }
+                      ],
+                      "card_mod": {
+                        "style": ":host {\n  {% set modelo = states('sensor.gwmbrasil_lgwffua59sh903754_modelo_do_veiculo').split(' ') %}\n  {% if 'TANK' not in modelo %}\n    display: none\n  {% endif %} !important;\n}\nha-card {\n  background: none !important /*bg*/;\n  border-radius: 6px;\n}\n"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:collapsable-cards",
+                  "title": "Portas e vidros",
+                  "defaultOpen": true,
+                  "cards": [
+                    {
+                      "type": "horizontal-stack",
+                      "cards": [
+                        {
+                          "type": "entities",
+                          "entities": [
+                            {
+                              "type": "custom:template-entity-row",
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_estado_da_trava",
+                              "name": "Trava das portas",
+                              "color": "{{ 'red' if is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_estado_da_trava', 'on') else '' }}",
+                              "icon": "{% if is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_estado_da_trava', 'off') %}mdi:car-door-lock{% elif is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_estado_da_trava', 'on') %}mdi:car-door-lock-open{% else %}mdi:cloud-question{% endif %}",
+                              "state": "{% if is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_estado_da_trava', 'off') %}Trancada{% elif is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_estado_da_trava', 'on') %}Destrancada{% else %}Desconhecido{% endif %}"
+                            },
+                            {
+                              "type": "custom:template-entity-row",
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_porta_dianteira_esquerda",
+                              "name": "Dianteira esquerda",
+                              "color": "{{ 'red' if is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_porta_dianteira_esquerda', 'on') else '' }}",
+                              "state": "{% if is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_porta_dianteira_esquerda', 'off') %}Fechada{% elif is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_porta_dianteira_esquerda', 'on') %}Aberta{% else %}Desconhecido{% endif %}"
+                            },
+                            {
+                              "type": "custom:template-entity-row",
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_porta_dianteira_direita",
+                              "name": "Dianteira direita",
+                              "color": "{{ 'red' if is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_porta_dianteira_direita', 'on') else '' }}",
+                              "state": "{% if is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_porta_dianteira_direita', 'off') %}Fechada{% elif is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_porta_dianteira_direita', 'on') %}Aberta{% else %}Desconhecido{% endif %}"
+                            },
+                            {
+                              "type": "custom:template-entity-row",
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_porta_traseira_esquerda",
+                              "name": "Traseira esquerda",
+                              "color": "{{ 'red' if is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_porta_traseira_esquerda', 'on') else '' }}",
+                              "state": "{% if is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_porta_traseira_esquerda', 'off') %}Fechada{% elif is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_porta_traseira_esquerda', 'on') %}Aberta{% else %}Desconhecido{% endif %}"
+                            },
+                            {
+                              "type": "custom:template-entity-row",
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_porta_traseira_direita",
+                              "name": "Traseira direita",
+                              "color": "{{ 'red' if is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_porta_traseira_direita', 'on') else '' }}",
+                              "state": "{% if is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_porta_traseira_direita', 'off') %}Fechada{% elif is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_porta_traseira_direita', 'on') %}Aberta{% else %}Desconhecido{% endif %}"
+                            },
+                            {
+                              "type": "custom:template-entity-row",
+                              "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_porta_malas",
+                              "name": "Porta malas",
+                              "state": "{% if is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_porta_malas', 'off') %}Fechado{% elif is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_porta_malas', 'on') %}Aberto{% else %}Desconhecido{% endif %}",
+                              "color": "{{ 'red' if is_state('binary_sensor.gwmbrasil_lgwffua59sh903754_porta_malas', 'on') else '' }}"
+                            }
+                          ],
+                          "state_color": false,
+                          "card_mod": {
+                            "style": "ha-card {\n  background: none !important /*bg*/;\n  border-radius: 6px;\n}\n"
+                          }
+                        },
+                        {
+                          "type": "vertical-stack",
+                          "cards": [
+                            {
+                              "type": "entities",
+                              "entities": [
+                                {
+                                  "type": "custom:template-entity-row",
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_vidro_dianteiro_esquerdo",
+                                  "name": "Dianteiro esquerdo",
+                                  "color": "{{ 'red' if not is_state('sensor.gwmbrasil_lgwffua59sh903754_vidro_dianteiro_esquerdo', '1') else '' }}",
+                                  "state": "{% if is_state('sensor.gwmbrasil_lgwffua59sh903754_vidro_dianteiro_esquerdo', '1') %}Fechado{% elif is_state('sensor.gwmbrasil_lgwffua59sh903754_vidro_dianteiro_esquerdo', '2') %}Aberto{% elif is_state('sensor.gwmbrasil_lgwffua59sh903754_vidro_dianteiro_esquerdo', '3') %}Entreaberto{% else %}Desconhecido{% endif %}"
+                                },
+                                {
+                                  "type": "custom:template-entity-row",
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_vidro_dianteiro_direito",
+                                  "name": "Dianteiro direito",
+                                  "color": "{{ 'red' if not is_state('sensor.gwmbrasil_lgwffua59sh903754_vidro_dianteiro_direito', '1') else '' }}",
+                                  "state": "{% if is_state('sensor.gwmbrasil_lgwffua59sh903754_vidro_dianteiro_direito', '1') %}Fechado{% elif is_state('sensor.gwmbrasil_lgwffua59sh903754_vidro_dianteiro_direito', '2') %}Aberto{% elif is_state('sensor.gwmbrasil_lgwffua59sh903754_vidro_dianteiro_direito', '3') %}Entreaberto{% else %}Desconhecido{% endif %}"
+                                },
+                                {
+                                  "type": "custom:template-entity-row",
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_vidro_traseiro_esquerdo",
+                                  "name": "Traseiro esquerdo",
+                                  "color": "{{ 'red' if not is_state('sensor.gwmbrasil_lgwffua59sh903754_vidro_traseiro_esquerdo', '1') else '' }}",
+                                  "state": "{% if is_state('sensor.gwmbrasil_lgwffua59sh903754_vidro_traseiro_esquerdo', '1') %}Fechado{% elif is_state('sensor.gwmbrasil_lgwffua59sh903754_vidro_traseiro_esquerdo', '2') %}Aberto{% elif is_state('sensor.gwmbrasil_lgwffua59sh903754_vidro_traseiro_esquerdo', '3') %}Entreaberto{% else %}Desconhecido{% endif %}"
+                                },
+                                {
+                                  "type": "custom:template-entity-row",
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_vidro_traseiro_direito",
+                                  "name": "Traseiro direito",
+                                  "color": "{{ 'red' if not is_state('sensor.gwmbrasil_lgwffua59sh903754_vidro_traseiro_direito', '1') else '' }}",
+                                  "state": "{% if is_state('sensor.gwmbrasil_lgwffua59sh903754_vidro_traseiro_direito', '1') %}Fechado{% elif is_state('sensor.gwmbrasil_lgwffua59sh903754_vidro_traseiro_direito', '2') %}Aberto{% elif is_state('sensor.gwmbrasil_lgwffua59sh903754_vidro_traseiro_direito', '3') %}Entreaberto{% else %}Desconhecido{% endif %}"
+                                }
+                              ],
+                              "card_mod": {
+                                "style": "ha-card {\n  background: none !important /*bg*/;\n  border-radius: 6px;\n}\n"
+                              }
+                            },
+                            {
+                              "type": "entities",
+                              "entities": [
+                                {
+                                  "type": "custom:template-entity-row",
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_posicao_do_teto_solar",
+                                  "name": "Teto Solar",
+                                  "state": "{% if is_state('sensor.gwmbrasil_lgwffua59sh903754_posicao_do_teto_solar', '3') %}Fechado{% else %}Aberto{% endif %}"
+                                },
+                                {
+                                  "type": "custom:bar-card",
+                                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_posicao_do_teto_solar",
+                                  "name": "Teto Solar",
+                                  "tap_action": {
+                                    "action": "none"
+                                  },
+                                  "hold_action": {
+                                    "action": "none"
+                                  },
+                                  "min": 0,
+                                  "max": 100,
+                                  "unit_of_measurement": "%",
+                                  "severity": [
+                                    {
+                                      "value": 0,
+                                      "color": "#009c72"
+                                    },
+                                    {
+                                      "value": 50,
+                                      "color": "#ffa200"
+                                    },
+                                    {
+                                      "value": 100,
+                                      "color": "#540000"
+                                    }
+                                  ],
+                                  "card_mod": {
+                                    "style": ":host {\n  display: {% if is_state('sensor.gwmbrasil_lgwffua59sh903754_posicao_do_teto_solar','3') %} none {% elif states('sensor.gwmbrasil_lgwffua59sh903754_posicao_do_teto_solar') is none %} none {% else %} block {% endif %};\n}\nha-card {\n  border-width: 0px !important;\n  background: none;\n}\n"
+                                  },
+                                  "state": "{% if is_state('sensor.gwmbrasil_lgwffua59sh903754_posicao_do_teto_solar', '3') %}Fechado{% else %}Aberto{% endif %}"
+                                }
+                              ],
+                              "card_mod": {
+                                "style": ":host {\n  {% if is_state('sensor.gwmbrasil_lgwffua59sh903754_posicao_do_teto_solar','unknown') %} display: none !important {% endif %};\n}\nha-card {\n  background: none !important /*bg*/;\n  border-radius: 6px;\n}\n"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "device_tracker.gwmbrasil_lgwffua59sh903754",
+                      "state_not": "unavailable"
+                    }
+                  ],
+                  "card": {
+                    "type": "custom:collapsable-cards",
+                    "title": "Mapa",
+                    "defaultOpen": true,
+                    "cards": [
+                      {
+                        "type": "custom:mushroom-entity-card",
+                        "entity": "sensor.gwmbrasil_lgwffua59sh903754_endereco_atual",
+                        "name": " "
+                      },
+                      {
+                        "type": "map",
+                        "tile_layer_options": {
+                          "referrerPolicy": "origin-when-cross-origin"
+                        },
+                        "entities": [
+                          {
+                            "entity": "device_tracker.gwmbrasil_lgwffua59sh903754"
+                          }
+                        ],
+                        "theme_mode": "dark",
+                        "default_zoom": 16,
+                        "hours_to_show": 30,
+                        "auto_fit": true,
+                        "aspect_ratio": "16:9",
+                        "card_mod": {
+                          "style": "ha-card {                  \n  border-radius: 6px;\n}\n"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "path": "controles",
+          "title": "Controles",
+          "icon": "mdi:camera-control",
+          "cards": [
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "markdown",
+                  "content": "{% set raw = states('sensor.gwmbrasil_lgwffua59sh903754_status_message') %}          {% if raw in ['unknown','unavailable','', None] %}\n  {% set mensagens = [] %}\n{% else %}\n  {% set mensagens = raw.split('|') %}\n{% endif %}\n{% set textos = {\n  \"NO_ALERTS\": \"Não há alertas neste momento.\",\n  \"ERR_FORMATTING_ADDRESS\": \"Erro ao formatar endereço.\",\n  \"ERR_GENERATE_RESPONSE\": \"Desculpe, houve um erro ao gerar a resposta.\",\n  \"ALERT_HIGH_VOLTAGE_DISCONNECT\": \"A bateria de alta tensão já está totalmente carregada. O carregador deve ser desconectado.\",\n  \"SUNROOF_OPEN\": \"O teto solar está aberto.\",\n  \"UNLOCKED\": \"A trava das portas não está acionada e o veículo pode ser aberto.\",\n  \"ENGINE_ON_AND_UNLOCKED\": \"O motor está ligado e o veículo está destravado. Verifique se não foi esquecido ligado.\",\n  \"FUEL_LOW\": \"Nível de combustível abaixo de 15 litros. Recomenda-se abastecer.\",\n  \"AC_ON_WITH_ENGINE_OFF\": \"O ar-condicionado está ligado com o veículo desligado. Isso pode drenar a bateria de 12V.\",\n  \"REVIEW_PREFIX\": \"Seu veículo está dentro do limite padrão de quilometragem para agendar a revisão.\"\n} %}\n{% for item in mensagens %}\n  {% set partes = item.split('@') %}\n  {% set codigo = partes[0] | trim %}\n  {% if codigo in textos %}\n  • {{ textos.get(codigo) }}\n  {% elif codigo == 'VEHICLE_CHARGING_TIME' and partes|length >= 2 %}\n  • O veículo está carregando. Tempo aproximado para carga total: {{ partes[1] }}.\n  {% elif codigo == 'WINDOW_OPEN' and partes|length >= 2 %}\n  • O {{ partes[1] }} está aberto.\n  {% elif codigo == 'DOOR_OPEN' and partes|length >= 2 %}\n  • A {{ partes[1] }} está aberta.\n  {% elif codigo == 'TRUNK_OPEN' and partes|length >= 2 %}\n  • O {{ partes[1] }} está aberto.\n  {% elif codigo == 'BATTERY_12V_CRITICAL' and partes|length >= 2 %}\n  • 🔴 Alerta crítico: bateria 12V em {{ partes[1] }}%. Ligue o motor o quanto antes.\n  {% elif codigo == 'BATTERY_12V_ALERT' and partes|length >= 2 %}\n  • 🟠 Atenção: bateria 12V em {{ partes[1] }}%.\n  {% elif codigo == 'TIRE_PRESSURE' and partes|length >= 4 %}\n  • A {{ partes[1] }} está em {{ partes[2] }} psi com temperatura de {{ partes[3] }}.\n  {% elif codigo == 'TIRE_PRESSURE_DEFAULTS' and partes|length >= 3 %}\n  • A pressão recomendada pela montadora é entre {{ partes[1] }} e {{ partes[2] }} psi.\n  {% elif codigo == 'SERVICE_WITH_TOLERANCE' and partes|length >= 2 %}\n  • Veículo no limite para revisão. Restam {{ partes[1] }} km antes da perda da garantia.\n  {% else %}\n  • {{ item }}\n  {% endif %}\n\n{% endfor %}\n",
+                  "card_mod": {
+                    "style": "ha-card {\n  background: rgba(30, 35, 45, 0.4);\n  backdrop-filter: blur(20px);\n  border-radius: 6px;\n  padding: 16px;\n  color: rgba(255,255,255,0.7);\n  font-size: 14px;\n  text-align: center;\n  display: {% if states('sensor.gwmbrasil_lgwffua59sh903754_status_message') in\n    ['NO_ALERTS','Não há alertas neste momento.','unknown','unavailable',''] %}\n    none\n  {% else %}\n    block\n  {% endif %} !important;\n}\n"
+                  }
+                },
+                {
+                  "type": "custom:button-card",
+                  "name": "MOTOR",
+                  "show_icon": false,
+                  "show_name": true,
+                  "show_state": false,
+                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_estado_do_motor",
+                  "styles": {
+                    "card": [
+                      {
+                        "background": "transparent"
+                      },
+                      {
+                        "box-shadow": "none"
+                      },
+                      {
+                        "padding": "8px 8px 0 8px"
+                      }
+                    ],
+                    "name": [
+                      {
+                        "font-size": "11px"
+                      },
+                      {
+                        "font-weight": "500"
+                      },
+                      {
+                        "letter-spacing": "1px"
+                      },
+                      {
+                        "color": "rgba(255,255,255,0.4)"
+                      },
+                      {
+                        "justify-self": "start"
+                      }
+                    ],
+                    "grid": [
+                      {
+                        "grid-template-areas": "\"n status\""
+                      },
+                      {
+                        "grid-template-columns": "1fr auto"
+                      }
+                    ]
+                  },
+                  "custom_fields": {
+                    "status": "[[[            \n  const status = states[`sensor.gwmbrasil_lgwffua59sh903754_estado_do_motor`].state;\n  if (status === 'none') return '';\n  const isOn = status === '1';\n  const color = isOn ? '#f87171' : '#4ade80';\n  const text = isOn ? 'Ligado' : 'Desligado';\n  return `<span style=\"display:flex;align-items:center;gap:6px;\">\n    <span style=\"width:6px;height:6px;border-radius:50%;background:` + color + `;animation:pulse 2s infinite;\"></span>\n    <span style=\"font-size:11px;color:` + color + `;\">` + text + `</span>\n  </span>`;\n]]]\n"
+                  }
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:button-card",
+                      "entity": "button.gwmbrasil_lgwffua59sh903754_ligar_o_motor",
+                      "name": "Ligar",
+                      "icon": "mdi:power",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "button.press",
+                        "service_data": {
+                          "entity_id": "button.gwmbrasil_lgwffua59sh903754_ligar_o_motor"
+                        }
+                      },
+                      "styles": {
+                        "card": [
+                          {
+                            "background": "rgba(30, 35, 45, 0.4)"
+                          },
+                          {
+                            "backdrop-filter": "blur(10px)"
+                          },
+                          {
+                            "border": "1px solid rgba(255,255,255,0.08)"
+                          },
+                          {
+                            "border-radius": "16px"
+                          },
+                          {
+                            "padding": "20px"
+                          },
+                          {
+                            "transition": "all 0.3s ease"
+                          }
+                        ],
+                        "card:hover": [
+                          {
+                            "border-color": "rgba(74, 222, 128, 0.4)"
+                          },
+                          {
+                            "box-shadow": "0 0 30px rgba(74, 222, 128, 0.1)"
+                          }
+                        ],
+                        "icon": [
+                          {
+                            "color": "rgba(255,255,255,0.5)"
+                          },
+                          {
+                            "width": "28px"
+                          },
+                          {
+                            "height": "28px"
+                          }
+                        ],
+                        "name": [
+                          {
+                            "font-size": "13px"
+                          },
+                          {
+                            "color": "rgba(255,255,255,0.7)"
+                          },
+                          {
+                            "margin-top": "8px"
+                          }
+                        ]
+                      },
+                      "card_mod": {
+                        "style": ":host {\n  padding: 0 0 0 8px \n}\n"
+                      }
+                    },
+                    {
+                      "type": "custom:button-card",
+                      "entity": "button.gwmbrasil_lgwffua59sh903754_desligar_o_motor",
+                      "name": "Desligar",
+                      "icon": "mdi:power-off",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "button.press",
+                        "service_data": {
+                          "entity_id": "button.gwmbrasil_lgwffua59sh903754_desligar_o_motor"
+                        }
+                      },
+                      "styles": {
+                        "card": [
+                          {
+                            "background": "rgba(30, 35, 45, 0.4)"
+                          },
+                          {
+                            "backdrop-filter": "blur(10px)"
+                          },
+                          {
+                            "border": "1px solid rgba(255,255,255,0.08)"
+                          },
+                          {
+                            "border-radius": "16px"
+                          },
+                          {
+                            "padding": "20px"
+                          },
+                          {
+                            "transition": "all 0.3s ease"
+                          }
+                        ],
+                        "card:hover": [
+                          {
+                            "border-color": "rgba(248, 113, 113, 0.4)"
+                          },
+                          {
+                            "box-shadow": "0 0 30px rgba(248, 113, 113, 0.1)"
+                          }
+                        ],
+                        "icon": [
+                          {
+                            "color": "rgba(255,255,255,0.5)"
+                          },
+                          {
+                            "width": "28px"
+                          },
+                          {
+                            "height": "28px"
+                          }
+                        ],
+                        "name": [
+                          {
+                            "font-size": "13px"
+                          },
+                          {
+                            "color": "rgba(255,255,255,0.7)"
+                          },
+                          {
+                            "margin-top": "8px"
+                          }
+                        ]
+                      },
+                      "card_mod": {
+                        "style": ":host {\n  padding: 0 8px 0 0\n}\n"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:button-card",
+                  "name": "PORTAS",
+                  "show_icon": false,
+                  "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_estado_da_trava",
+                  "styles": {
+                    "card": [
+                      {
+                        "background": "transparent"
+                      },
+                      {
+                        "box-shadow": "none"
+                      },
+                      {
+                        "padding": "16px 8px 0 8px"
+                      }
+                    ],
+                    "name": [
+                      {
+                        "font-size": "11px"
+                      },
+                      {
+                        "font-weight": "500"
+                      },
+                      {
+                        "letter-spacing": "1px"
+                      },
+                      {
+                        "color": "rgba(255,255,255,0.4)"
+                      },
+                      {
+                        "justify-self": "start"
+                      }
+                    ],
+                    "grid": [
+                      {
+                        "grid-template-areas": "\"n status\""
+                      },
+                      {
+                        "grid-template-columns": "1fr auto"
+                      }
+                    ]
+                  },
+                  "custom_fields": {
+                    "status": "[[[\n  const status = states[`binary_sensor.gwmbrasil_lgwffua59sh903754_estado_da_trava`].state;\n  if (status === 'none') return '';\n  const isOpen = status === 'on';\n  const color = isOpen ? '#f87171' : '#4ade80';\n  const text = isOpen ? 'Abertas' : 'Fechadas';\n  return `<span style=\"display:flex;align-items:center;gap:6px;\">\n    <span style=\"width:6px;height:6px;border-radius:50%;background:` + color + `;animation:pulse 2s infinite;\"></span>\n    <span style=\"font-size:11px;color:` + color + `;\">` + text + `</span>\n  </span>`;\n]]]\n"
+                  }
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:button-card",
+                      "entity": "button.gwmbrasil_lgwffua59sh903754_abrir_as_portas",
+                      "name": "Abrir",
+                      "icon": "mdi:car-door",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "button.press",
+                        "service_data": {
+                          "entity_id": "button.gwmbrasil_lgwffua59sh903754_abrir_as_portas"
+                        }
+                      },
+                      "styles": {
+                        "card": [
+                          {
+                            "background": "rgba(30, 35, 45, 0.4)"
+                          },
+                          {
+                            "backdrop-filter": "blur(10px)"
+                          },
+                          {
+                            "border": "1px solid rgba(255,255,255,0.08)"
+                          },
+                          {
+                            "border-radius": "16px"
+                          },
+                          {
+                            "padding": "20px"
+                          },
+                          {
+                            "transition": "all 0.3s ease"
+                          }
+                        ],
+                        "card:hover": [
+                          {
+                            "border-color": "rgba(96, 165, 250, 0.4)"
+                          },
+                          {
+                            "box-shadow": "0 0 30px rgba(96, 165, 250, 0.1)"
+                          }
+                        ],
+                        "icon": [
+                          {
+                            "color": "rgba(255,255,255,0.5)"
+                          },
+                          {
+                            "width": "28px"
+                          },
+                          {
+                            "height": "28px"
+                          }
+                        ],
+                        "name": [
+                          {
+                            "font-size": "13px"
+                          },
+                          {
+                            "color": "rgba(255,255,255,0.7)"
+                          },
+                          {
+                            "margin-top": "8px"
+                          }
+                        ]
+                      },
+                      "card_mod": {
+                        "style": ":host {\n  padding: 0 0 0 8px\n}\n"
+                      }
+                    },
+                    {
+                      "type": "custom:button-card",
+                      "entity": "button.gwmbrasil_lgwffua59sh903754_fechar_as_portas",
+                      "name": "Fechar",
+                      "icon": "mdi:car-door-lock",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "button.press",
+                        "service_data": {
+                          "entity_id": "button.gwmbrasil_lgwffua59sh903754_fechar_as_portas"
+                        }
+                      },
+                      "styles": {
+                        "card": [
+                          {
+                            "background": "rgba(30, 35, 45, 0.4)"
+                          },
+                          {
+                            "backdrop-filter": "blur(10px)"
+                          },
+                          {
+                            "border": "1px solid rgba(255,255,255,0.08)"
+                          },
+                          {
+                            "border-radius": "16px"
+                          },
+                          {
+                            "padding": "20px"
+                          },
+                          {
+                            "transition": "all 0.3s ease"
+                          }
+                        ],
+                        "card:hover": [
+                          {
+                            "border-color": "rgba(248, 113, 113, 0.4)"
+                          },
+                          {
+                            "box-shadow": "0 0 30px rgba(248, 113, 113, 0.1)"
+                          }
+                        ],
+                        "icon": [
+                          {
+                            "color": "rgba(255,255,255,0.5)"
+                          },
+                          {
+                            "width": "28px"
+                          },
+                          {
+                            "height": "28px"
+                          }
+                        ],
+                        "name": [
+                          {
+                            "font-size": "13px"
+                          },
+                          {
+                            "color": "rgba(255,255,255,0.7)"
+                          },
+                          {
+                            "margin-top": "8px"
+                          }
+                        ]
+                      },
+                      "card_mod": {
+                        "style": ":host {\n  padding: 0 8px 0 0\n}\n"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:button-card",
+                  "name": "PORTA-MALAS",
+                  "show_icon": false,
+                  "entity": "binary_sensor.gwmbrasil_lgwffua59sh903754_porta_malas",
+                  "styles": {
+                    "card": [
+                      {
+                        "background": "transparent"
+                      },
+                      {
+                        "box-shadow": "none"
+                      },
+                      {
+                        "padding": "16px 8px 0 8px"
+                      }
+                    ],
+                    "name": [
+                      {
+                        "font-size": "11px"
+                      },
+                      {
+                        "font-weight": "500"
+                      },
+                      {
+                        "letter-spacing": "1px"
+                      },
+                      {
+                        "color": "rgba(255,255,255,0.4)"
+                      },
+                      {
+                        "justify-self": "start"
+                      }
+                    ],
+                    "grid": [
+                      {
+                        "grid-template-areas": "\"n status\""
+                      },
+                      {
+                        "grid-template-columns": "1fr auto"
+                      }
+                    ]
+                  },
+                  "custom_fields": {
+                    "status": "[[[\n  const status = states[`binary_sensor.gwmbrasil_lgwffua59sh903754_porta_malas`].state;\n  if (status === 'none') return '';\n  const isOpen = status === 'on';\n  const color = isOpen ? '#f87171' : '#4ade80';\n  const text = isOpen ? 'Aberto' : 'Fechado';\n  return `<span style=\"display:flex;align-items:center;gap:6px;\">\n    <span style=\"width:6px;height:6px;border-radius:50%;background:` + color + `;animation:pulse 2s infinite;\"></span>\n    <span style=\"font-size:11px;color:` + color + `;\">` + text + `</span>\n  </span>`;\n]]]\n"
+                  }
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:button-card",
+                      "entity": "button.gwmbrasil_lgwffua59sh903754_abrir_porta_malas",
+                      "name": "Abrir",
+                      "icon": "mdi:car-outline",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "button.press",
+                        "service_data": {
+                          "entity_id": "button.gwmbrasil_lgwffua59sh903754_abrir_porta_malas"
+                        }
+                      },
+                      "styles": {
+                        "card": [
+                          {
+                            "background": "rgba(30, 35, 45, 0.4)"
+                          },
+                          {
+                            "backdrop-filter": "blur(10px)"
+                          },
+                          {
+                            "border": "1px solid rgba(255,255,255,0.08)"
+                          },
+                          {
+                            "border-radius": "16px"
+                          },
+                          {
+                            "padding": "20px"
+                          },
+                          {
+                            "transition": "all 0.3s ease"
+                          }
+                        ],
+                        "card:hover": [
+                          {
+                            "border-color": "rgba(251, 191, 36, 0.4)"
+                          },
+                          {
+                            "box-shadow": "0 0 30px rgba(251, 191, 36, 0.1)"
+                          }
+                        ],
+                        "icon": [
+                          {
+                            "color": "rgba(255,255,255,0.5)"
+                          },
+                          {
+                            "width": "28px"
+                          },
+                          {
+                            "height": "28px"
+                          }
+                        ],
+                        "name": [
+                          {
+                            "font-size": "13px"
+                          },
+                          {
+                            "color": "rgba(255,255,255,0.7)"
+                          },
+                          {
+                            "margin-top": "8px"
+                          }
+                        ]
+                      },
+                      "card_mod": {
+                        "style": ":host {\n  padding: 0 0 0 8px\n}\n"
+                      }
+                    },
+                    {
+                      "type": "custom:button-card",
+                      "entity": "button.gwmbrasil_lgwffua59sh903754_fechar_porta_malas",
+                      "name": "Fechar",
+                      "icon": "mdi:car-back",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "button.press",
+                        "service_data": {
+                          "entity_id": "button.gwmbrasil_lgwffua59sh903754_fechar_porta_malas"
+                        }
+                      },
+                      "styles": {
+                        "card": [
+                          {
+                            "background": "rgba(30, 35, 45, 0.4)"
+                          },
+                          {
+                            "backdrop-filter": "blur(10px)"
+                          },
+                          {
+                            "border": "1px solid rgba(255,255,255,0.08)"
+                          },
+                          {
+                            "border-radius": "16px"
+                          },
+                          {
+                            "padding": "20px"
+                          },
+                          {
+                            "transition": "all 0.3s ease"
+                          }
+                        ],
+                        "card:hover": [
+                          {
+                            "border-color": "rgba(248, 113, 113, 0.4)"
+                          },
+                          {
+                            "box-shadow": "0 0 30px rgba(248, 113, 113, 0.1)"
+                          }
+                        ],
+                        "icon": [
+                          {
+                            "color": "rgba(255,255,255,0.5)"
+                          },
+                          {
+                            "width": "28px"
+                          },
+                          {
+                            "height": "28px"
+                          }
+                        ],
+                        "name": [
+                          {
+                            "font-size": "13px"
+                          },
+                          {
+                            "color": "rgba(255,255,255,0.7)"
+                          },
+                          {
+                            "margin-top": "8px"
+                          }
+                        ]
+                      },
+                      "card_mod": {
+                        "style": ":host {\n  padding: 0 8px 0 0\n}\n"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:button-card",
+                  "name": "VIDROS",
+                  "show_icon": false,
+                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_vidro_dianteiro_esquerdo",
+                  "tap_action": {
+                    "action": "none"
+                  },
+                  "hold_action": {
+                    "action": "none"
+                  },
+                  "styles": {
+                    "card": [
+                      {
+                        "background": "transparent"
+                      },
+                      {
+                        "box-shadow": "none"
+                      },
+                      {
+                        "padding": "16px 8px 0 8px"
+                      }
+                    ],
+                    "name": [
+                      {
+                        "font-size": "11px"
+                      },
+                      {
+                        "font-weight": "500"
+                      },
+                      {
+                        "letter-spacing": "1px"
+                      },
+                      {
+                        "color": "rgba(255,255,255,0.4)"
+                      },
+                      {
+                        "justify-self": "start"
+                      }
+                    ],
+                    "grid": [
+                      {
+                        "grid-template-areas": "\"n status\""
+                      },
+                      {
+                        "grid-template-columns": "1fr auto"
+                      }
+                    ]
+                  },
+                  "custom_fields": {
+                    "status": "[[[\n  const sensors = [\n    `sensor.gwmbrasil_lgwffua59sh903754_vidro_dianteiro_esquerdo`,\n    `sensor.gwmbrasil_lgwffua59sh903754_vidro_dianteiro_direito`,\n    `sensor.gwmbrasil_lgwffua59sh903754_vidro_traseiro_esquerdo`,\n    `sensor.gwmbrasil_lgwffua59sh903754_vidro_traseiro_direito`\n  ];\n\n  const values = sensors\n    .map(e => states[e]?.state)\n    .filter(v => v !== undefined && v !== 'none');\n\n  if (values.length === 0) return '';\n\n  const anyOpen = values.some(v => v !== '1');\n\n  const color = anyOpen ? '#f87171' : '#4ade80';\n  const text  = anyOpen ? 'Abertos' : 'Fechados';\n\n  return `\n    <span style=\"display:flex;align-items:center;gap:6px;\">\n      <span style=\"\n        width:6px;\n        height:6px;\n        border-radius:50%;\n        background:` + color + `;\n        animation:pulse 2s infinite;\n      \"></span>\n      <span style=\"font-size:11px;color:` + color + `;\">\n        ` + text + `\n      </span>\n    </span>\n  `;\n]]]\n"
+                  }
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:button-card",
+                      "entity": "button.gwmbrasil_lgwffua59sh903754_abrir_os_vidros",
+                      "name": "Abrir",
+                      "icon": "mdi:car-windshield-outline",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "button.press",
+                        "service_data": {
+                          "entity_id": "button.gwmbrasil_lgwffua59sh903754_abrir_os_vidros"
+                        }
+                      },
+                      "styles": {
+                        "card": [
+                          {
+                            "background": "rgba(30, 35, 45, 0.4)"
+                          },
+                          {
+                            "backdrop-filter": "blur(10px)"
+                          },
+                          {
+                            "border": "1px solid rgba(255,255,255,0.08)"
+                          },
+                          {
+                            "border-radius": "16px"
+                          },
+                          {
+                            "padding": "20px"
+                          },
+                          {
+                            "transition": "all 0.3s ease"
+                          }
+                        ],
+                        "card:hover": [
+                          {
+                            "border-color": "rgba(74, 222, 128, 0.4)"
+                          },
+                          {
+                            "box-shadow": "0 0 30px rgba(74, 222, 128, 0.1)"
+                          }
+                        ],
+                        "icon": [
+                          {
+                            "color": "rgba(255,255,255,0.5)"
+                          },
+                          {
+                            "width": "28px"
+                          },
+                          {
+                            "height": "28px"
+                          }
+                        ],
+                        "name": [
+                          {
+                            "font-size": "13px"
+                          },
+                          {
+                            "color": "rgba(255,255,255,0.7)"
+                          },
+                          {
+                            "margin-top": "8px"
+                          }
+                        ]
+                      },
+                      "card_mod": {
+                        "style": ":host {\n  padding: 0 0 0 8px\n}\n"
+                      }
+                    },
+                    {
+                      "type": "custom:button-card",
+                      "entity": "button.gwmbrasil_lgwffua59sh903754_fechar_os_vidros",
+                      "name": "Fechar",
+                      "icon": "mdi:car-windshield",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "button.press",
+                        "service_data": {
+                          "entity_id": "button.gwmbrasil_lgwffua59sh903754_fechar_os_vidros"
+                        }
+                      },
+                      "styles": {
+                        "card": [
+                          {
+                            "background": "rgba(30, 35, 45, 0.4)"
+                          },
+                          {
+                            "backdrop-filter": "blur(10px)"
+                          },
+                          {
+                            "border": "1px solid rgba(255,255,255,0.08)"
+                          },
+                          {
+                            "border-radius": "16px"
+                          },
+                          {
+                            "padding": "20px"
+                          },
+                          {
+                            "transition": "all 0.3s ease"
+                          }
+                        ],
+                        "card:hover": [
+                          {
+                            "border-color": "rgba(248, 113, 113, 0.4)"
+                          },
+                          {
+                            "box-shadow": "0 0 30px rgba(248, 113, 113, 0.1)"
+                          }
+                        ],
+                        "icon": [
+                          {
+                            "color": "rgba(255,255,255,0.5)"
+                          },
+                          {
+                            "width": "28px"
+                          },
+                          {
+                            "height": "28px"
+                          }
+                        ],
+                        "name": [
+                          {
+                            "font-size": "13px"
+                          },
+                          {
+                            "color": "rgba(255,255,255,0.7)"
+                          },
+                          {
+                            "margin-top": "8px"
+                          }
+                        ]
+                      },
+                      "card_mod": {
+                        "style": ":host {\n  padding: 0 8px 0 0\n}\n"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:button-card",
+                  "name": "TETO SOLAR",
+                  "show_icon": false,
+                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_posicao_do_teto_solar",
+                  "styles": {
+                    "card": [
+                      {
+                        "background": "transparent"
+                      },
+                      {
+                        "box-shadow": "none"
+                      },
+                      {
+                        "padding": "16px 8px 0 8px"
+                      }
+                    ],
+                    "name": [
+                      {
+                        "font-size": "11px"
+                      },
+                      {
+                        "font-weight": "500"
+                      },
+                      {
+                        "letter-spacing": "1px"
+                      },
+                      {
+                        "color": "rgba(255,255,255,0.4)"
+                      },
+                      {
+                        "justify-self": "start"
+                      }
+                    ],
+                    "grid": [
+                      {
+                        "grid-template-areas": "\"n status\""
+                      },
+                      {
+                        "grid-template-columns": "1fr auto"
+                      }
+                    ]
+                  },
+                  "custom_fields": {
+                    "status": "[[[\n  const status = states[`sensor.gwmbrasil_lgwffua59sh903754_posicao_do_teto_solar`].state;\n  if (status === 'none') return '';\n  const isOpen = status !== '3';\n  const color = isOpen ? '#f87171' : '#4ade80';\n  const text = isOpen ? 'Aberto' : 'Fechado';\n  return `<span style=\"display:flex;align-items:center;gap:6px;\">\n    <span style=\"width:6px;height:6px;border-radius:50%;background:` + color + `;animation:pulse 2s infinite;\"></span>\n    <span style=\"font-size:11px;color:` + color + `;\">` + text + `</span>\n  </span>`;\n]]]\n"
+                  }
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:button-card",
+                      "entity": "button.gwmbrasil_lgwffua59sh903754_abrir_teto_solar",
+                      "name": "Abrir",
+                      "icon": "mdi:weather-sunny",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "button.press",
+                        "service_data": {
+                          "entity_id": "button.gwmbrasil_lgwffua59sh903754_abrir_teto_solar"
+                        }
+                      },
+                      "styles": {
+                        "card": [
+                          {
+                            "background": "rgba(30, 35, 45, 0.4)"
+                          },
+                          {
+                            "backdrop-filter": "blur(10px)"
+                          },
+                          {
+                            "border": "1px solid rgba(255,255,255,0.08)"
+                          },
+                          {
+                            "border-radius": "16px"
+                          },
+                          {
+                            "padding": "20px"
+                          },
+                          {
+                            "transition": "all 0.3s ease"
+                          }
+                        ],
+                        "card:hover": [
+                          {
+                            "border-color": "rgba(251, 191, 36, 0.4)"
+                          },
+                          {
+                            "box-shadow": "0 0 30px rgba(251, 191, 36, 0.1)"
+                          }
+                        ],
+                        "icon": [
+                          {
+                            "color": "rgba(255,255,255,0.5)"
+                          },
+                          {
+                            "width": "28px"
+                          },
+                          {
+                            "height": "28px"
+                          }
+                        ],
+                        "name": [
+                          {
+                            "font-size": "13px"
+                          },
+                          {
+                            "color": "rgba(255,255,255,0.7)"
+                          },
+                          {
+                            "margin-top": "8px"
+                          }
+                        ]
+                      },
+                      "card_mod": {
+                        "style": ":host {\n  padding: 0 0 0 8px\n}\n"
+                      }
+                    },
+                    {
+                      "type": "custom:button-card",
+                      "entity": "button.gwmbrasil_lgwffua59sh903754_fechar_teto_solar",
+                      "name": "Fechar",
+                      "icon": "mdi:weather-night",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "button.press",
+                        "service_data": {
+                          "entity_id": "button.gwmbrasil_lgwffua59sh903754_fechar_teto_solar"
+                        }
+                      },
+                      "styles": {
+                        "card": [
+                          {
+                            "background": "rgba(30, 35, 45, 0.4)"
+                          },
+                          {
+                            "backdrop-filter": "blur(10px)"
+                          },
+                          {
+                            "border": "1px solid rgba(255,255,255,0.08)"
+                          },
+                          {
+                            "border-radius": "16px"
+                          },
+                          {
+                            "padding": "20px"
+                          },
+                          {
+                            "transition": "all 0.3s ease"
+                          }
+                        ],
+                        "card:hover": [
+                          {
+                            "border-color": "rgba(96, 165, 250, 0.4)"
+                          },
+                          {
+                            "box-shadow": "0 0 30px rgba(96, 165, 250, 0.1)"
+                          }
+                        ],
+                        "icon": [
+                          {
+                            "color": "rgba(255,255,255,0.5)"
+                          },
+                          {
+                            "width": "28px"
+                          },
+                          {
+                            "height": "28px"
+                          }
+                        ],
+                        "name": [
+                          {
+                            "font-size": "13px"
+                          },
+                          {
+                            "color": "rgba(255,255,255,0.7)"
+                          },
+                          {
+                            "margin-top": "8px"
+                          }
+                        ]
+                      },
+                      "card_mod": {
+                        "style": ":host {\n  padding: 0 8px 0 0\n}\n"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "subview": true,
+          "layout": {}
+        },
+        {
+          "type": "panel",
+          "path": "gwm-charging-history",
+          "cards": [
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "custom:mushroom-template-card",
+                  "primary": "Atualizar histórico de carregamento",
+                  "icon": "mdi:clipboard-clock-outline",
+                  "entity": "button.gwmbrasil_lgwffua59sh903754_historico_de_carregamento",
+                  "hold_action": {
+                    "action": "none"
+                  },
+                  "tap_action": {
+                    "action": "toggle"
+                  }
+                },
+                {
+                  "type": "custom:gwm-charging-history-card",
+                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_estado_de_carga_soc"
+                }
+              ]
+            }
+          ],
+          "title": "Histórico de carregamento",
+          "icon": "mdi:clipboard-text-clock",
+          "subview": false
+        },
+        {
+          "type": "panel",
+          "path": "mapa",
+          "title": "Mapa",
+          "icon": "mdi:map-marker-distance",
+          "cards": [
+            {
+              "type": "grid",
+              "square": false,
+              "cards": [
+                {
+                  "type": "custom:mushroom-title-card",
+                  "title": "{% set vin = states('select.gwmbrasil_veiculos_registrados') %} {% set modelo =  states('sensor.gwmbrasil_lgwffua59sh903754_modelo_do_veiculo') %}\nVeículo: {{ [vin, modelo]\n   | reject('in', ['unknown', 'unavailable', ''])\n   | join(' - ') }}\n",
+                  "card_mod": {
+                    "style": ":host {\n  display: {% if state_attr('select.gwmbrasil_veiculos_registrados', 'options') | length > 1 %} block {% else %} none {% endif %};\n}\nha-card h1 {\n  font-size: 14px !important;\n  font-weight: 500;\n  letter-spacing: 0.5px;\n}\n"
+                  }
+                },
+                {
+                  "type": "energy-date-selection",
+                  "card_mod": {
+                    "style": "ha-card {\n  z-index: 1;\n  position: absolute;\n  height: 80px !important;\n  width: 80%;\n  top: 75px;\n  right: 10px;\n  max-width: 450px;\n  color: white;\n  background: rgb(0,0,0,0.7);\n}\n"
+                  }
+                },
+                {
+                  "type": "custom:mushroom-entity-card",
+                  "entity": "sensor.gwmbrasil_lgwffua59sh903754_endereco_atual",
+                  "name": " "
+                },
+                {
+                  "type": "custom:auto-entities",
+                  "card": {
+                    "type": "custom:map-card",
+                    "history_date_selection": true,
+                    "tile_layer_options": {
+                      "referrerPolicy": "origin-when-cross-origin"
+                    },
+                    "card_mod": {
+                      "style": "ha-card {\n  margin-top: -10px;\n}\nha-card #map {\n  height:calc(100vh - 56px);\n  border-radius:0;\n}\n"
+                    }
+                  },
+                  "filter": {
+                    "template": "{% set veiculo = states('select.gwmbrasil_veiculos_registrados') | lower %} {% if veiculo not in ['unknown', 'unavailable', ''] %}\n  {{ 'device_tracker.gwmbrasil_' ~ veiculo }}\n{% endif %}\n"
+                  }
+                }
+              ],
+              "columns": 1
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "path": "gwm-3d",
+          "title": "gwm-3d",
+          "icon": "mdi:video-3d",
+          "cards": [
+            {
+              "type": "iframe",
+              "aspect_ratio": "100%",
+              "url": "[[[ return (function () {\nconst modelo = states[`sensor.gwmbrasil_lgwffua59sh903754_modelo_do_veiculo`]?.state; const motor  = states[`sensor.gwmbrasil_lgwffua59sh903754_tipo_de_motor`]?.state;\nlet name = \"WEY07\";\nif (modelo === \"HAVAL H6 HEV\" && motor === \"GW4B15M\") name = \"NOVOH6HEV2\"; else if (modelo === \"HAVAL H6 HEV\") name = \"H6HEV2\"; else if (modelo === \"HAVAL H6 PHEV\" && motor === \"GW4B15M\") name = \"NOVOH6PHEV35\"; else if (modelo === \"HAVAL H6 PHEV\") name = \"H6PHEV\"; else if (modelo === \"HAVAL H6 PHEV (FWD)\" && motor === \"GW4B15M\") name = \"NOVOH6PHEV19\"; else if (modelo === \"HAVAL H6 PHEV (FWD)\") name = \"H6PHEVFWD\"; else if (modelo === \"HAVAL H6 GT PHEV\" && motor === \"GW4B15M\") name = \"NOVOH6GT\"; else if (modelo === \"HAVAL H6 GT PHEV\") name = \"H6GT\"; else if (modelo === \"ORA 03 Skin (BEV48)\") name = \"ES11\"; else if (modelo === \"ORA 03 (BEV58)\") name = \"ES11THA\"; else if (modelo === \"ORA 03 GT\") name = \"ES11GT\"; else if (modelo === \"Tank 300\") name = \"TANK300\"; else if (modelo === \"Poer P30\") name = \"POER_Mid\"; else if (modelo === \"Poer P30 Exclusive\") name = \"POER_High\"; else if (modelo === \"HAVAL H9\") name = \"H9\";\nreturn \"https://br-h5-abroad-community.gwmcloud.com/br-vr/?name=\" + name;\n})(); ]]]"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

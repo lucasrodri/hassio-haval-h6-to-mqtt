@@ -1,0 +1,3 @@
+frontend:
+  extra_module_url:
+    - /hacsfiles/lovelace-card-mod/card-mod.js?v=4.2.1
